@@ -1,4 +1,5 @@
 import arrow from "src/images/arrow.svg";
+import clsx from "clsx";
 
 import styles from "./ArrowButton.module.scss";
 import React, { useState } from "react";
@@ -25,19 +26,20 @@ export const ArrowButton = (props: Props) => {
 			role="button"
 			aria-label="Открыть/Закрыть форму параметров статьи"
 			tabIndex={0}
-			className={props.state ? `${styles.contaner}` : `${styles.contaner} `}
-			// className={styles.container}
+			className={
+				props.state
+					? clsx(styles.container, styles.container_open)
+					: clsx(styles.container)
+			}
 		>
 			<img
 				src={arrow}
 				alt="иконка стрелочки"
-				// `${styles.container} ${styles.container_open}`
-				// className={
-				// 	props.state
-				// 		? `${styles.arrow}`
-				// 		: `${styles.arrow} ${styles.arrow_open}`
-				// }
-				className={styles.arrow}
+				className={
+					props.state
+						? clsx(styles.arrow, styles.arrow_open)
+						: clsx(styles.arrow)
+				}
 			/>
 		</div>
 	);
