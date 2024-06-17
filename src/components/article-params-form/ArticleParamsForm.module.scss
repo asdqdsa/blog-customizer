@@ -30,3 +30,28 @@
 	justify-content: space-between;
 	margin-top: auto;
 }
+
+
+/// remove later ////
+
+.option {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 30px;
+	padding: 5px;
+	padding: 15px 17px;
+	background-color: rgb(255 255 255 / 100%);
+	border: 1px;
+	cursor: pointer;
+}
+
+.option[aria-selected='true'] {
+	background-color: rgb(0 0 0 / 5%);
+}
+
+.option:hover {
+	background: var(--grey, #c4c4c4);
+}
+
+/// remove later ////

@@ -6,43 +6,78 @@ import { RadioGroup } from "../radio-group";
 import { Children, useState } from "react";
 import { Separator } from "../separator";
 import { Select } from "../select";
-import { OnClick } from "../arrow-button/ArrowButton";
+import type { OnClick, ArrowButtonProps } from "../arrow-button/ArrowButton";
 
 export const ArticleParamsForm = () => {
-	const [isMenuOpen, setisMenuOpen] = useState(false);
-	console.log(isMenuOpen);
-	const handleMenuState: OnClick = () => {
-		setisMenuOpen(!isMenuOpen);
-		// console.log(isMenuOpen);
+	const [isOpenMenu, setIsOpenMenu] = useState(false);
+	const [fontSize, setFontSize] = useState("");
+	const [fontColor, setFontColor] = useState("");
+	const [backgroundColor, setBackgroundColor] = useState("");
+	const handleMenuState: OnClick = () => setIsOpenMenu(!isOpenMenu);
+
+	const handleArticleFormChange = () => {
+		console.log("hotel foxtrot");
+	};
+	const handleArticleFormClose = () => {
+		console.log("hotel charlie");
 	};
 	return (
 		<>
-			<ArrowButton state={isMenuOpen} onCLick={handleMenuState} />
+			<ArrowButton menuState={isOpenMenu} onClick={handleMenuState} />
 			<aside
 				className={
-					isMenuOpen
+					isOpenMenu
 						? `${styles.container} ${styles.container_open}`
 						: `${styles.container}`
 				}
 			>
 				<form className={styles.form}>
-					{/* <Select
-						selected={null}
+					<Select
+						selected={{
+							title: "Ubuntu",
+							value: "Ubuntu",
+							className: "ubuntu",
+							optionClassName: "ubuntu",
+						}}
+						// value={"uniform"}
 						options={[
 							{
-								title: "aaaa",
-								value: "aaa",
-								className: "sss",
-								optionClassName: "sdf",
+								title: "Open Sans",
+								value: "Open Sans",
+								className: "open-sans",
+								optionClassName: "open-sans",
 							},
 							{
-								title: "bbbb",
-								value: "bbb",
-								className: "sss",
-								optionClassName: "sdf",
+								title: "Ubuntu",
+								value: "Ubuntu",
+								className: "ubuntu",
+								optionClassName: "ubuntu",
+							},
+							{
+								title: "Cormorant Garamond",
+								value: "Cormorant Garamond",
+								className: "cormorant-garamond",
+								optionClassName: "cormorant-garamond",
+							},
+							{
+								title: "Days One",
+								value: "Days One",
+								className: "days-one",
+								optionClassName: "days-one",
+							},
+							{
+								title: "Merriweather",
+								value: "Merriweather",
+								className: "merriweather",
+								optionClassName: "merriweather",
 							},
 						]}
-					/> */}
+						placeholder="papahotel"
+						onChange={handleArticleFormChange}
+						onClose={handleArticleFormClose}
+						title="Tango"
+					/>
+
 					{/* <RadioGroup
 						name="Name"
 						selected={{
