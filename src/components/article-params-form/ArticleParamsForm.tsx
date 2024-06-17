@@ -7,16 +7,31 @@ import { Children, useState } from "react";
 import { Separator } from "../separator";
 import { Select } from "../select";
 import type { OnClick, ArrowButtonProps } from "../arrow-button/ArrowButton";
+import {
+	defaultArticleState,
+	type ArticleStateType,
+	fontFamilyOptions,
+} from "src/constants/articleProps";
 
-export const ArticleParamsForm = () => {
-	const [isOpenMenu, setIsOpenMenu] = useState(false);
+type ArticleParamsFormProps = {
+	articleState: ArticleStateType;
+	setArticleState: (args: ArticleStateType) => void;
+};
+
+export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
+	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+	const [fontFamily, setFontFamily] = useState(
+		defaultArticleState.fontFamilyOption,
+	);
 	const [fontSize, setFontSize] = useState("");
 	const [fontColor, setFontColor] = useState("");
 	const [backgroundColor, setBackgroundColor] = useState("");
 	const handleMenuState: OnClick = () => setIsOpenMenu(!isOpenMenu);
 
-	const handleArticleFormChange = () => {
-		console.log("hotel foxtrot");
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	const handleArticleFormChange = (value: any) => {
+		setFontFamily(value);
+		console.log("setting font type");
 	};
 	const handleArticleFormClose = () => {
 		console.log("hotel charlie");
@@ -33,49 +48,10 @@ export const ArticleParamsForm = () => {
 			>
 				<form className={styles.form}>
 					<Select
-						selected={{
-							title: "Ubuntu",
-							value: "Ubuntu",
-							className: "ubuntu",
-							optionClassName: "ubuntu",
-						}}
-						// value={"uniform"}
-						options={[
-							{
-								title: "Open Sans",
-								value: "Open Sans",
-								className: "open-sans",
-								optionClassName: "open-sans",
-							},
-							{
-								title: "Ubuntu",
-								value: "Ubuntu",
-								className: "ubuntu",
-								optionClassName: "ubuntu",
-							},
-							{
-								title: "Cormorant Garamond",
-								value: "Cormorant Garamond",
-								className: "cormorant-garamond",
-								optionClassName: "cormorant-garamond",
-							},
-							{
-								title: "Days One",
-								value: "Days One",
-								className: "days-one",
-								optionClassName: "days-one",
-							},
-							{
-								title: "Merriweather",
-								value: "Merriweather",
-								className: "merriweather",
-								optionClassName: "merriweather",
-							},
-						]}
-						placeholder="papahotel"
+						selected={fontFamily}
+						options={fontFamilyOptions}
 						onChange={handleArticleFormChange}
-						onClose={handleArticleFormClose}
-						title="Tango"
+						title="Font"
 					/>
 
 					{/* <RadioGroup
