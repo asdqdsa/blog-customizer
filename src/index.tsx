@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { StrictMode, type CSSProperties, useState } from "react";
+import { StrictMode, type CSSProperties, useState, useEffect } from "react";
 import clsx from "clsx";
 
 import { Article } from "./components/article/Article";
@@ -14,16 +14,21 @@ const root = createRoot(domNode);
 
 const App = () => {
 	const [articleState, setArticleState] = useState(defaultArticleState);
+
+	useEffect(() => {
+		console.log("state changed", articleState);
+	}, [articleState]);
 	return (
 		<div
 			className={clsx(styles.main)}
 			style={
 				{
-					"--font-family": defaultArticleState.fontFamilyOption.value,
-					"--font-size": defaultArticleState.fontSizeOption.value,
-					"--font-color": defaultArticleState.fontColor.value,
-					"--container-width": defaultArticleState.contentWidth.value,
-					"--bg-color": defaultArticleState.backgroundColor.value,
+					"--font-family": articleState.fontFamilyOption.value,
+					// "--font-family": "Days One",
+					"--font-size": articleState.fontSizeOption.value,
+					"--font-color": articleState.fontColor.value,
+					"--container-width": articleState.contentWidth.value,
+					"--bg-color": articleState.backgroundColor.value,
 				} as CSSProperties
 			}
 		>

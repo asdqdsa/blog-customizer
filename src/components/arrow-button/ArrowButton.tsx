@@ -12,16 +12,17 @@ export type ArrowButtonProps = {
 	onClick: OnClick;
 };
 export const ArrowButton = (props: ArrowButtonProps) => {
+	const { menuState, onClick } = props;
 	return (
 		/* Не забываем указаывать role и aria-label атрибуты для интерактивных элементов */
 		<div
-			onClick={props.onClick}
-			onKeyDown={props.onClick}
+			onClick={onClick}
+			onKeyDown={onClick}
 			role="button"
 			aria-label="Открыть/Закрыть форму параметров статьи"
 			tabIndex={0}
 			className={
-				props.menuState
+				menuState
 					? clsx(styles.container, styles.container_open)
 					: clsx(styles.container)
 			}
@@ -30,9 +31,7 @@ export const ArrowButton = (props: ArrowButtonProps) => {
 				src={arrow}
 				alt="иконка стрелочки"
 				className={
-					props.menuState
-						? clsx(styles.arrow, styles.arrow_open)
-						: clsx(styles.arrow)
+					menuState ? clsx(styles.arrow, styles.arrow_open) : clsx(styles.arrow)
 				}
 			/>
 		</div>
