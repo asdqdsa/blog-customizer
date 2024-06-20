@@ -2,13 +2,14 @@ import { ArrowButton } from "components/arrow-button";
 import { Button } from "components/button";
 import styles from "./ArticleParamsForm.module.scss";
 import clsx from "clsx";
-import { type SyntheticEvent, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Select } from "../select";
 import { RadioGroup } from "../radio-group";
 import { Separator } from "../separator";
 import type { OnClick } from "../arrow-button/ArrowButton";
 import {
 	type ArticleStateType,
+	type OptionType,
 	defaultArticleState,
 	fontFamilyOptions,
 	fontColors,
@@ -24,51 +25,21 @@ type ArticleParamsFormProps = {
 };
 
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
+	const { articleState, setArticleState } = props;
 	const rootRef = useRef(null);
 	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-	const [fontFamily, setFontFamily] = useState(
-		defaultArticleState.fontFamilyOption,
-	);
-	const [fontColor, setFontColor] = useState(defaultArticleState.fontColor);
-	const [fontSize, setFontSize] = useState(defaultArticleState.fontSizeOption);
-	const [backgroundColor, setBackgroundColor] = useState(
-		defaultArticleState.backgroundColor,
-	);
-	const [contentWidth, setContentWidth] = useState(
-		defaultArticleState.contentWidth,
-	);
+
+	const [allArticleStates, setAllArticleStates] =
+		useState<ArticleStateType>(articleState);
+
+	const handleChange = (
+		formInputField: keyof ArticleStateType,
+		value: OptionType,
+	) => {
+		setAllArticleStates({ ...allArticleStates, [formInputField]: value });
+	};
 
 	const handleMenuState: OnClick = () => setIsOpenMenu(!isOpenMenu);
-
-	const handleFormSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
-		props.setArticleState({
-			...props.articleState,
-			fontFamilyOption: fontFamily,
-			fontColor: fontColor,
-			fontSizeOption: fontSize,
-			contentWidth: contentWidth,
-			backgroundColor: backgroundColor,
-		});
-	};
-
-	const handleFormReset = (e: SyntheticEvent) => {
-		e.preventDefault();
-		props.setArticleState({
-			...props.articleState,
-			fontFamilyOption: defaultArticleState.fontFamilyOption,
-			fontColor: defaultArticleState.fontColor,
-			fontSizeOption: defaultArticleState.fontSizeOption,
-			contentWidth: defaultArticleState.contentWidth,
-			backgroundColor: defaultArticleState.backgroundColor,
-		});
-
-		setFontFamily(defaultArticleState.fontFamilyOption);
-		setFontColor(defaultArticleState.fontColor);
-		setFontSize(defaultArticleState.fontSizeOption);
-		setBackgroundColor(defaultArticleState.backgroundColor);
-		setContentWidth(defaultArticleState.contentWidth);
-	};
 
 	useOutsideClickClose({
 		isOpen: isOpenMenu,
@@ -88,62 +59,58 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 				}
 			>
 				<form
-					onSubmit={handleFormSubmit}
-					onReset={handleFormReset}
+					onSubmit={(e) => {
+						e.preventDefault();
+						setArticleState(allArticleStates);
+					}}
+					onReset={(e) => {
+						e.preventDefault();
+						setArticleState(defaultArticleState);
+						setAllArticleStates(defaultArticleState);
+					}}
 					className={styles.form}
-					title="Title"
-					name="TTT"
+					title="Задайте Параметры"
+					name="Form Article"
 				>
 					<div>
-						<h2
-							style={{
-								display: "inline-block",
-								textAlign: "left",
-								fontSize: 31,
-								fontFamily: "Open Sans, sans-serif",
-								fontWeight: 800,
-								marginBlockEnd: 50,
-							}}
-						>
-							ЗАДАЙТЕ ПАРАМЕТРЫ
-						</h2>
+						<h2 className={clsx(styles.title)}>ЗАДАЙТЕ ПАРАМЕТРЫ</h2>
 					</div>
 
 					<Select
-						selected={fontFamily}
+						selected={allArticleStates.fontFamilyOption}
 						options={fontFamilyOptions}
-						onChange={setFontFamily}
+						onChange={(option) => handleChange("fontFamilyOption", option)}
 						title="ШРИФТ"
 					/>
 
 					<RadioGroup
-						selected={fontSize}
+						selected={allArticleStates.fontSizeOption}
 						options={fontSizeOptions}
-						onChange={setFontSize}
+						onChange={(option) => handleChange("fontSizeOption", option)}
 						title="РАЗМЕР ШРИФТА"
 						name={"Font Size"}
 					/>
 
 					<Select
-						selected={fontColor}
+						selected={allArticleStates.fontColor}
 						options={fontColors}
-						onChange={setFontColor}
+						onChange={(option) => handleChange("fontColor", option)}
 						title="ЦВЕТ ШРИФТА"
 					/>
 
 					<Separator />
 
 					<Select
-						selected={backgroundColor}
+						selected={allArticleStates.backgroundColor}
 						options={backgroundColors}
-						onChange={setBackgroundColor}
+						onChange={(option) => handleChange("backgroundColor", option)}
 						title="ЦВЕТ ФОНА"
 					/>
 
 					<Select
-						selected={contentWidth}
+						selected={allArticleStates.contentWidth}
 						options={contentWidthArr}
-						onChange={setContentWidth}
+						onChange={(option) => handleChange("contentWidth", option)}
 						title="ШИРИНА КОНТЕНТА"
 					/>
 
