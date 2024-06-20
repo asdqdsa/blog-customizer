@@ -1,28 +1,21 @@
 import { ArrowButton } from "components/arrow-button";
 import { Button } from "components/button";
-
 import styles from "./ArticleParamsForm.module.scss";
-import { RadioGroup } from "../radio-group";
-import {
-	Children,
-	type FormEvent,
-	useState,
-	type SyntheticEvent,
-	useRef,
-} from "react";
-import { Separator } from "../separator";
+import clsx from "clsx";
+import { type SyntheticEvent, useState, useRef } from "react";
 import { Select } from "../select";
-import type { OnClick, ArrowButtonProps } from "../arrow-button/ArrowButton";
+import { RadioGroup } from "../radio-group";
+import { Separator } from "../separator";
+import type { OnClick } from "../arrow-button/ArrowButton";
 import {
-	defaultArticleState,
 	type ArticleStateType,
+	defaultArticleState,
 	fontFamilyOptions,
 	fontColors,
 	fontSizeOptions,
 	contentWidthArr,
 	backgroundColors,
 } from "src/constants/articleProps";
-import clsx from "clsx";
 import { useOutsideClickClose } from "../select/hooks/useOutsideClickClose";
 
 type ArticleParamsFormProps = {
@@ -44,21 +37,11 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [contentWidth, setContentWidth] = useState(
 		defaultArticleState.contentWidth,
 	);
-	// const [backgroundColor, setBackgroundColor] = useState("");
-	const handleMenuState: OnClick = () => setIsOpenMenu(!isOpenMenu);
 
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	const handleArticleFormChange = (value: any) => {
-		setFontFamily(value);
-		console.log("setting font type");
-	};
-	const handleArticleFormClose = () => {
-		console.log("hotel charlie");
-	};
+	const handleMenuState: OnClick = () => setIsOpenMenu(!isOpenMenu);
 
 	const handleFormSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
-		console.log("hehe", { fontFamilyOption: fontFamily });
 		props.setArticleState({
 			...props.articleState,
 			fontFamilyOption: fontFamily,
@@ -71,7 +54,6 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 
 	const handleFormReset = (e: SyntheticEvent) => {
 		e.preventDefault();
-		console.log("hehe", { fontFamilyOption: fontFamily });
 		props.setArticleState({
 			...props.articleState,
 			fontFamilyOption: defaultArticleState.fontFamilyOption,
@@ -80,6 +62,12 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 			contentWidth: defaultArticleState.contentWidth,
 			backgroundColor: defaultArticleState.backgroundColor,
 		});
+
+		setFontFamily(defaultArticleState.fontFamilyOption);
+		setFontColor(defaultArticleState.fontColor);
+		setFontSize(defaultArticleState.fontSizeOption);
+		setBackgroundColor(defaultArticleState.backgroundColor);
+		setContentWidth(defaultArticleState.contentWidth);
 	};
 
 	useOutsideClickClose({
@@ -125,21 +113,22 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 						selected={fontFamily}
 						options={fontFamilyOptions}
 						onChange={setFontFamily}
-						title="Font"
-					/>
-					<Select
-						selected={fontColor}
-						options={fontColors}
-						onChange={setFontColor}
-						title="Color"
+						title="ШРИФТ"
 					/>
 
 					<RadioGroup
 						selected={fontSize}
 						options={fontSizeOptions}
 						onChange={setFontSize}
-						title="Size"
-						name={""}
+						title="РАЗМЕР ШРИФТА"
+						name={"Font Size"}
+					/>
+
+					<Select
+						selected={fontColor}
+						options={fontColors}
+						onChange={setFontColor}
+						title="ЦВЕТ ШРИФТА"
 					/>
 
 					<Separator />
@@ -148,15 +137,16 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 						selected={backgroundColor}
 						options={backgroundColors}
 						onChange={setBackgroundColor}
-						title="Background Color"
+						title="ЦВЕТ ФОНА"
 					/>
 
 					<Select
 						selected={contentWidth}
 						options={contentWidthArr}
 						onChange={setContentWidth}
-						title="Width"
+						title="ШИРИНА КОНТЕНТА"
 					/>
+
 					<div className={styles.bottomContainer}>
 						<Button title="Сбросить" type="reset" />
 						<Button title="Применить" type="submit" />

@@ -1,8 +1,6 @@
 import arrow from "src/images/arrow.svg";
 import clsx from "clsx";
-
 import styles from "./ArrowButton.module.scss";
-import React, { useState } from "react";
 
 /** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
@@ -11,6 +9,7 @@ export type ArrowButtonProps = {
 	menuState: boolean;
 	onClick: OnClick;
 };
+
 export const ArrowButton = (props: ArrowButtonProps) => {
 	const { menuState, onClick } = props;
 	return (

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from './Button';
+import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
 	component: Button,
@@ -14,14 +14,14 @@ export const ButtonStory: Story = {
 		return (
 			<>
 				<Button
-					title='Сбросить'
-					type='reset'
-					onClick={() => alert('клик на кнопку сбросить')}
+					title="Сбросить"
+					type="reset"
+					onClick={() => alert("клик на кнопку сбросить")}
 				/>
 				<Button
-					title='Применить'
-					type='submit'
-					onClick={() => alert('клик на кнопку применить')}
+					title="Применить"
+					type="submit"
+					onClick={() => alert("клик на кнопку применить")}
 				/>
 			</>
 		);

@@ -1,6 +1,7 @@
-import { Text } from 'components/text';
+import { Text } from "components/text";
 
-import styles from './Button.module.scss';
+import styles from "./Button.module.scss";
+import clsx from "clsx";
 
 export const Button = ({
 	title,
@@ -9,10 +10,18 @@ export const Button = ({
 }: {
 	title: string;
 	onClick?: () => void;
-	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+	type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }) => {
 	return (
-		<button className={styles.button} type={type} onClick={onClick}>
+		<button
+			className={
+				type !== "reset"
+					? clsx(styles.button)
+					: clsx(styles.button, styles.button_reset)
+			}
+			type={type}
+			onClick={onClick}
+		>
 			<Text weight={800} uppercase>
 				{title}
 			</Text>
